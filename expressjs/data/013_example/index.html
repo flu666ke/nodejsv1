@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Make Request!</title>
+
+    <style>
+    div {
+        margin-top: 25px;
+    }
+    </style>
+
+    <script>
+
+window.onload = function(){
+    var btns = document.getElementsByTagName('button')
+
+    // отправка GET запроса 
+    btns[0].addEventListener('click', function(){
+
+        var getReq = new XMLHttpRequest()
+        var str = encodeURIComponent('This is a sample GET request! <br />')
+
+        getReq.open('GET', `/test?text=${str}`)
+
+        getReq.onload = function() {
+            document.getElementById('output').innerHTML += this.responseText
+    }
+
+    getReq.send()
+    })
+
+
+    // отправка POST запроса
+    btns[1].addEventListener('click', function(){
+
+        var postReq = new XMLHttpRequest()
+        postReq.open('POST', '/test')
+        postReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+
+        postReq.onload = function() {
+        document.getElementById('output').innerHTML += this.responseText
+        }
+
+        var str = encodeURIComponent('This is a sample POST request! <br />')
+        postReq.send(`text=${str}`)
+    })
+}
+
+    </script>
+</head>
+<body>
+    
+<h2>Press button to make request to server!</h2>
+
+<div><button>GET</button></div>
+<div><button>POST</button></div>
+
+<div id="output"></div>
+
+</body>
+</html>
